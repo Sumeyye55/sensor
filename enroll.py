@@ -1,7 +1,13 @@
+import time
+
 from pyfingerprint.pyfingerprint import PyFingerprint
 
+# GT-521F52 UART defaults to 9600 baud at power-on (not 57600).
+# Allow the module to finish boot after Vin is applied.
+time.sleep(0.5)
+
 try:
-    f = PyFingerprint('/dev/serial0', 57600, 0xFFFFFFFF, 0x00000000)
+    f = PyFingerprint('/dev/serial0', 9600, 0xFFFFFFFF, 0x00000000)
     if not f.verifyPassword():
         raise ValueError('Sensor password is wrong!')
 except Exception as e:
@@ -15,7 +21,6 @@ while not f.readImage():
 f.convertImage(0x01)  # Store in buffer 1
 
 print('Remove finger')
-import time
 time.sleep(2)
 
 print('Place same finger again...')
