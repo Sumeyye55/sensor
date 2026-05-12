@@ -62,7 +62,7 @@ if not is_ack(capture):
     exit()
 
 print("Tanıma yapılıyor...")
-identify = send_packet(0x0051)  # Identify
+identify = send_packet(0x0060, 1)  # Identify
 
 if is_ack(identify):
     finger_id = get_param(identify)
