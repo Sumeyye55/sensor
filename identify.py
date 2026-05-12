@@ -1,7 +1,7 @@
 import serial
 import time
 
-PORT = "/dev/ttyUSB0"
+PORT = "/dev/ttyUSB1"
 BAUD = 9600
 
 AUTHORIZED_ID = 0   # Parmağı ID 0'a kaydettiysen 0 yap. ID 1'e kaydettiysen 1 yap.

@@ -2,7 +2,7 @@ import serial
 import time
 from PIL import Image, ImageOps
 
-PORT = "/dev/ttyUSB0"
+PORT = "/dev/ttyUSB1"
 
 BAUD_START = 9600
 BAUD_FAST = 115200
