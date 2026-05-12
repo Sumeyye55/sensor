@@ -7,16 +7,18 @@ from pyfingerprint.pyfingerprint import PyFingerprint
 # --- Güç anahtarı (MOSFET / röle Sürücü) — kabloya göre ayarlayın ---
 # Vin sensöre harici veya GPIO ile kontrol edilen bir hat üzerinden gidiyorsa,
 # sensör açılmadan LED yanmaz ve serial init de başarısız olur.
-USE_GPIO_POWER = True   # Set True when sensor VCC is controlled via a GPIO pin/transistor
-SENSOR_POWER_BCM = 18  # BCM pin number driving the transistor/MOSFET gate (physical pin 12)
-# N-channel MOSFET / NPN transistor (high = sensor ON):  True
-# P-channel MOSFET / relay active-low (low = sensor ON): False
+# GT-521F52: power VCC directly from Pi 3.3V pin (pin 1 or 17) — no GPIO switching needed.
+# The sensor LED only lights during an active scan, not just from being powered — this is normal.
+USE_GPIO_POWER = True
+SENSOR_POWER_BCM = 18
 POWER_ACTIVE_HIGH = True
-# Time (seconds) to wait after power-on for sensor LED and UART to stabilise
-POWER_STABILIZE_SEC = 2.0
+POWER_STABILIZE_SEC = 0.5
 
-# GT-521F52 fabrika varsayılanı 9600 baud
-SERIAL_PORT = "/dev/serial0"
+# RPi 3B+: Bluetooth occupies /dev/ttyAMA0 (hardware UART).
+# To use the reliable UART, disable BT: add "dtoverlay=disable-bt" to /boot/firmware/config.txt
+# then reboot — after that /dev/serial0 -> /dev/ttyAMA0 and this will work reliably.
+# If you haven't done that yet, try /dev/ttyS0 (mini-UART, less reliable but may work).
+SERIAL_PORT = "/dev/ttyS0"
 BAUD = 9600
 
 _power_ctl = None
